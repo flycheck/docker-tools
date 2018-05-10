@@ -1,21 +1,48 @@
+# This image includes a minimal Emacs built from source, Cask, and make.  It is
+# used to run Flycheck's unit tests.
+
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # Build Emacs
 FROM ubuntu:18.04 AS emacs-builder
 
 ENV DEBIAN_FRONTEND noninteractive
 RUN apt-get update && \
     apt-get install --no-install-recommends -y \
+            autoconf \
+            automake \
             build-essential \
             ca-certificates \
             curl \
             libncurses-dev \
+            unzip \
+            xz-utils \
     && rm -rf /var/lib/apt/lists/*
 
-ENV EMACS_VERSION 25.3
-RUN curl -sSLo emacs.txz https://ftp.gnu.org/gnu/emacs/emacs-${EMACS_VERSION}.tar.xz \
-    && mkdir emacs \
-    && tar -xf emacs.txz -C emacs --strip-components=1 \
-    && cd emacs \
-    && ./configure --prefix=/opt/emacs \
+ARG EMACS_VERSION
+ENV EMACS_VERSION ${EMACS_VERSION:-25.3}
+RUN case ${EMACS_VERSION} in \
+      master) \
+        curl -sSLo emacs.zip "https://github.com/emacs-mirror/emacs/archive/master.zip" \
+        && unzip emacs.zip \
+        && rm emacs.zip \
+        ;; \
+      *-rc*) \
+        curl -sSLo emacs.tz "https://alpha.gnu.org/pub/gnu/emacs/pretest/emacs-${EMACS_VERSION}.tar.xz" \
+        && mkdir emacs-master \
+        && tar -C emacs-master --strip-components=1 -xf emacs.tz \
+        && rm emacs.tz \
+        ;; \
+      *) \
+        curl -sSLo emacs.tz "https://ftpmirror.gnu.org/emacs/emacs-${EMACS_VERSION}.tar.xz" \
+        && mkdir emacs-master \
+        && tar -C emacs-master --strip-components=1 -xf emacs.tz \
+        && rm emacs.tz \
+        ;; \
+    esac \
+    && cd emacs-master \
+    && ./autogen.sh \
+    && CANNOT_DUMP=yes \
+       ./configure --prefix=/opt/emacs \
                    --with-x-toolkit=no --without-x --without-all --with-xml2 \
                    CFLAGS='-O2 -march=native' CXXFLAGS='-O2 -march=native' \
     && make -j8 install

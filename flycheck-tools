@@ -1,3 +1,7 @@
+# This image includes (nearly) all the tools supported by Flycheck.  It is used
+# to run Flycheck's integration tests on CI.
+
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # Builder image.  We build ruby and GO tools, then we don't need build-essential
 # for the later image
 FROM ubuntu:latest AS builder
