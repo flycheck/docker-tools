@@ -3,7 +3,10 @@
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # Build Emacs
-FROM ubuntu:18.04 AS emacs-builder
+
+# We need 16.04 as Emacs 24.4 and 24.5 won't build with 18.04.
+# But they work fine with a 18.04 runtime.
+FROM ubuntu:16.04 AS emacs-builder
 
 ENV DEBIAN_FRONTEND noninteractive
 RUN apt-get update && \
@@ -41,8 +44,7 @@ RUN case ${EMACS_VERSION} in \
     esac \
     && cd emacs-master \
     && ./autogen.sh \
-    && CANNOT_DUMP=yes \
-       ./configure --prefix=/opt/emacs \
+    && ./configure --prefix=/opt/emacs \
                    --with-x-toolkit=no --without-x --without-all --with-xml2 \
                    CFLAGS='-O2 -march=native' CXXFLAGS='-O2 -march=native' \
     && make -j8 install
@@ -86,6 +88,9 @@ COPY --from=emacs-builder /opt/emacs /opt/emacs
 ENV PATH /root/.cask/bin:$PATH
 COPY --from=cask-builder /root/.cask /root/.cask
 RUN cask init
+
+# Check that they were correctly built
+RUN emacs --version && cask --version
 
 # To grab Emacs, use:
 # ENV PATH /opt/emacs/bin:$PATH

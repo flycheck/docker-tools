@@ -1,0 +1,15 @@
+language: generic
+
+services: docker
+
+env:
+  - EMACS_VERSION="master"
+  - EMACS_VERSION="26.1-rc1"
+  - EMACS_VERSION="25.3"
+  - EMACS_VERSION="24.5"
+
+script:
+  - |
+    docker build --build-arg EMACS_VERSION=${EMACS_VERSION} \
+                 --tag emacs-cask:${EMACS_VERSION} \
+                 --file=emacs-cask .
