@@ -1,0 +1,107 @@
+#!/bin/sh
+
+echo "--- Installed tools ---" \
+    && echo "ada-gnat: $(gnat --version | head -n1)" \
+    && echo "asciidoc: $(asciidoc --version)" \
+    && echo "asciidoctor: $(asciidoctor --version | head -n1)" \
+    && echo "c/c++-clang: $(clang --version | head -n1)" \
+    && echo "c/c++-cppcheck: $(cppcheck --version)" \
+    && echo "c/c++-gcc: $(gcc --version | head -n1) $(g++ --version | head -n1)" \
+    && echo "cfengine: $(cf-promises --version)" \
+    && echo "chef-foodcritic: $(foodcritic --version)" \
+    && echo "coffee: $(coffee --version)" \
+    && echo "coffeelint: $(coffeelint --version)" \
+    && echo "coq: $(coqtop --version |head -n1)" \
+    && echo "css-csslint: $(csslint --version)" \
+    && echo "css-stylelint: $(stylelint --version)" \
+    && echo "cwl: $(schema-salad-tool --version)" \
+    && echo "d-dmd: missing" 1>&2 \
+    && echo "dockerfile-hadolint: $(hadolint --version)" 1>&2 \
+    && echo "elixir-dogma: missing" 1>&2 \
+    && echo "erlang-rebar3: $(rebar3 --version)" 1>&2 \
+    && echo "erlang: $(dpkg -s erlang-base | grep Version | cut -d: -f3)" \
+    && echo "eruby-erubis: $(erubis -v)" \
+    && echo "fortran-gfortran: $(gfortran --version | head -n1)" \
+    && echo "go-build: $(go version)" \
+    && echo "go-errcheck: ??" \
+    && echo "go-gofmt: $(go version)" \
+    && echo "go-golint: ??" \
+    && echo "go-megacheck: ??" \
+    && echo "go-test: $(go version)" \
+    && echo "go-unconvert: ??" \
+    && echo "go-vet: $(go version)" \
+    && echo "groovy: $(groovy --version)" \
+    && echo "haml: $(haml --version)" \
+    && echo "handlebars: $(handlebars --version)" \
+    && echo "haskell-ghc: $(ghc --version)" \
+    && echo "haskell-hlint: $(hlint --version)" \
+    && echo "haskell-stack-ghc: missing" 1>&2 \
+    && echo "html-tidy: $(tidy --version)" \
+    && echo "javascript-eslint: $(eslint --version)" \
+    && echo "javascript-jshint: $(jshint --version 2>&1)" \
+    && echo "javascript-standard: standard $(standard --version) semistandard $(semistandard --version)" \
+    && echo "jscs: $(jscs --version)" \
+    && echo "json-jsonlint: $(jsonlint --version)" \
+    && echo "json-python-json: $(python --version 2>&1)" \
+    && echo "jsonnet: missing" 1>&2 \
+    && echo "less-stylelint: $(stylelint --version)" \
+    && echo "less: $(lessc --version)" \
+    && echo "lua-luacheck: $(luacheck --version | head -n1)" \
+    && echo "lua: $(lua -v 2>&1)" \
+    && echo "markdown-markdownlint-cli: $(markdownlint --version)" \
+    && echo "markdown-mdl: $(mdl --version)" \
+    && echo "nix: missing" 1>&2 \
+    && echo "perl-perlcritic: $(perlcritic --version)" \
+    && echo "perl: $(perl --version | sed -n 2p)" \
+    && echo "php-phpcs: $(phpcs --version)" \
+    && echo "php-phpmd: missing" 1>&2 \
+    && echo "php: $(php --version | head -n1)" \
+    && echo "processing: $(processing-java --help | sed -n 2p)" \
+    && echo "proselint: $(proselint --version)" \
+    && echo "protobuf-protoc: $(protoc --version)" \
+    && echo "pug: $(pug --version | paste -s)" \
+    && echo "puppet-lint: $(puppet-lint --version)" \
+    && echo "puppet-parser: $(puppet --version)" \
+    && echo "python-flake8: $(flake8 --version)" \
+    && echo "python-pycompile: $(python --version 2>&1)" \
+    && echo "python-pylint: $(pylint --version 2>/dev/null | head -n1)" \
+    && echo "r-lintr: missing" 1>&2 \
+    && echo "racket: $(racket --version)" \
+    && echo "rpm-rpmlint: $(rpmlint --version)" \
+    && echo "rst-sphinx: $(sphinx-build --version 2>&1)" \
+    && echo "rst: $(rst2pseudoxml.py --version)" \
+    && echo "ruby-jruby: $(jruby --version)" \
+    && echo "ruby-reek: $(reek --version)" \
+    && echo "ruby-rubocop: $(rubocop --version)" \
+    && echo "ruby-rubylint: $(ruby-lint --version 2>/dev/null)" \
+    && echo "ruby: $(ruby --version)" \
+    && echo "rust-cargo: $(cargo --version)" \
+    && echo "rust: $(rustc --version)" \
+    && echo "sass/scss-sass-lint: $(sass-lint --version)" \
+    && echo "sass: $(sass --version)" \
+    && echo "scala-scalastyle: missing" 1>&2 \
+    && echo "scala: $(scala -version 2>&1)" \
+    && echo "scheme-chicken: $(csc -version | sed -n 3p)" \
+    && echo "scss-lint: $(scss-lint --version)" \
+    && echo "scss-stylelint: $(stylelint --version)" \
+    && echo "scss: $(scss --version)" \
+    && echo "sh-bash: $(bash --version | head -n1)" \
+    && echo "sh-posix-bash: $(bash --version | head -n1)" \
+    && echo "sh-posix-dash: $(dpkg -s dash | grep Version | cut -d' ' -f2)" \
+    && echo "sh-shellcheck: $(shellcheck --version | sed -n 2p)" \
+    && echo "sh-zsh: $(zsh --version)" \
+    && echo "slim-lint: $(slim-lint --version)" \
+    && echo "slim: $(slimrb --version)" \
+    && echo "sql-sqlint: $(sqlint --version)" \
+    && echo "systemd-analyze: not installed (cannot run 'verify' in container)" \
+    && echo "tcl-nagelfar: missing" 1>&2 \
+    && echo "tex-chktex: $(chktex --version | head -n1)" \
+    && echo "tex-lacheck: $(dpkg -s lacheck | grep Version | cut -d' ' -f2)" \
+    && echo "texinfo: $(makeinfo --version | head -n1)" \
+    && echo "typescript-tslint: $(tslint --version)" \
+    && echo "verilog-verilator: $(verilator --version)" \
+    && echo "vhdl-ghdl: missing" 1>&2 \
+    && echo "xml-xmllint: $(xmllint --version 2>&1 | head -n1)" \
+    && echo "xml-xmlstarlet: $(dpkg -s xmlstarlet | grep Version | cut -d' ' -f2)" \
+    && echo "yaml-jsyaml: $(js-yaml --version)" \
+    && echo "yaml-ruby: $(ruby --version)"

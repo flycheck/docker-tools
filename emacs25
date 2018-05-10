@@ -1,0 +1,72 @@
+# Build Emacs
+FROM ubuntu:18.04 AS emacs-builder
+
+ENV DEBIAN_FRONTEND noninteractive
+RUN apt-get update && \
+    apt-get install --no-install-recommends -y \
+            build-essential \
+            ca-certificates \
+            curl \
+            libncurses-dev \
+    && rm -rf /var/lib/apt/lists/*
+
+ENV EMACS_VERSION 25.3
+RUN curl -sSLo emacs.txz https://ftp.gnu.org/gnu/emacs/emacs-${EMACS_VERSION}.tar.xz \
+    && mkdir emacs \
+    && tar -xf emacs.txz -C emacs --strip-components=1 \
+    && cd emacs \
+    && ./configure --prefix=/opt/emacs \
+                   --with-x-toolkit=no --without-x --without-all --with-xml2 \
+                   CFLAGS='-O2 -march=native' CXXFLAGS='-O2 -march=native' \
+    && make -j8 install
+
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# Get and bootstrap cask
+
+FROM ubuntu:18.04 AS cask-builder
+
+ENV DEBIAN_FRONTEND noninteractive
+RUN apt-get update && \
+    apt-get install --no-install-recommends -y \
+            ca-certificates \
+            curl \
+            git \
+            gnutls-bin \
+            python \
+    && rm -rf /var/lib/apt/lists/*
+
+ENV PATH /opt/emacs/bin:$PATH
+COPY --from=emacs-builder /opt/emacs /opt/emacs
+
+RUN curl -fsSL https://raw.githubusercontent.com/cask/cask/master/go | python
+
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# Final images, without developement dependencies
+FROM ubuntu:18.04
+
+ENV DEBIAN_FRONTEND noninteractive
+RUN apt-get update && \
+    apt-get install --no-install-recommends -y \
+            ca-certificates \
+            gnutls-bin \
+            make \
+            python \
+    && rm -rf /var/lib/apt/lists/*
+
+ENV PATH /opt/emacs/bin:$PATH
+COPY --from=emacs-builder /opt/emacs /opt/emacs
+
+ENV PATH /root/.cask/bin:$PATH
+COPY --from=cask-builder /root/.cask /root/.cask
+RUN cask init
+
+# To grab Emacs, use:
+# ENV PATH /opt/emacs/bin:$PATH
+# COPY --from=emacs25 /opt/emacs /opt/emacs
+
+# To grab Cask:
+# ENV PATH /root/.cask/bin:$PATH
+# COPY --from=emacs25 /root/.cask /root/.cask
+
+# To reuse the `cask init` call:
+# COPY --from=emacs25 /root/.emacs.d /root/.emacs.d

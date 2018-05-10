@@ -1,0 +1,16 @@
+FROM flycheck-tools
+
+# We need gnutls for downloading packages from ELPA
+RUN apt-get update && \
+    apt-get install --no-install-recommends -y \
+            gnutls-bin \
+            make \
+    && rm -rf /var/lib/apt/lists/*
+
+# We need Emacs and Cask
+ENV PATH /opt/emacs/bin:$PATH
+COPY --from=emacs25 /opt/emacs /opt/emacs
+
+ENV PATH /root/.cask/bin:$PATH
+COPY --from=emacs25 /root/.cask /root/.cask
+COPY --from=emacs25 /root/.emacs.d /root/.emacs.d
