@@ -4,7 +4,7 @@
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # Builder image.  We build ruby and GO tools, then we don't need build-essential
 # for the later image
-FROM ubuntu:latest AS builder
+FROM ubuntu:18.04 AS builder
 
 RUN apt-get update >/dev/null && \
     apt-get install --no-install-recommends -y \
