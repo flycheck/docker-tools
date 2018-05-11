@@ -1,15 +1,22 @@
 language: generic
-
 services: docker
-
 env:
+  global:
+  - secure: kj+E6wr1xI8RN9Yrvbj3olnBHEE7fqhBnyPHbGx5gTP296DG05z+iyqExw7CbfNz7sDndxd5j6eUis0VxLb6heAHZLtWzdGJ3VSrofvWnQ2SjiDtA87Ixo6w68GCp3YwmOBnMU9XB1Q1sHk4ON57hJRnsyzP7nBKb1xzrfrvkNWhanGuZg/c17fC13YjSuvr8xr/yWTRJ6LhQSg1q347P3/glJ38k5CSkKT1pYNc8Lw6/2gqMp9Q/qTtXXDDnadKXoCgJ86j0J8c5ZwKN8Ns4ql7CdrlC19TuyE3p59VedCNsRSo1pL5T82w6zeTtBz8aePkXwtvBZw82OL/Ouc1pTlI6lr09lngghQDplIBVS4JoVds8fvyEd9GK5DOmyYclXnn0sBfE0Kl4rcL6OjZJ3Twssizw30E4D8ej8uGBpttdIMPyQD/SeXe5mPhDaILWCqLC2LseTSb1ZTcGanLwG778Wes8q+LEQpWaQ4PAGXRJXJRYILn7ad4izKnCngTfF4IIVz7BYecCer20vLeg9LyXjkVnuXK6ScCxwoWM1ccXm2bMml2jJjPQckp+/hBn+H25JTDmFO/MXmz+JmoMs7zfwIplwkaCZ5E5QGCQ7e1ynwkp6UknzToSGORbF9mtJxFIPYR6JRulkPcA8hhISPoOQhWouOXpY1VhFLjsg0=
+  - secure: JPSsZtEPzof+30zYpvvNYXs835CpOgSppyRsGx67ro15QaIZMRjIbOQ3uHVcdrJCgEeen2Vf+iqrb2wLv009FOmKqlsaeq6hdZSaLrgHKpTyiYhXdMw0qw8++eETXk96pX+sxy8oDy+28V/ipkg58lRchHuH3GQv66uo/M71cs2BdcbdG2GH0NKAxG3UtL1UR9OghZwQ6T6GwUs/P4GKWA9Y96oE6F+qtylA8gUuZT//DIRExu47oK0Cmd4SU72OKOiX1uzps53yNvtQqlkODMXT465uE/2OSKPaWqXzulxuh5hv9ZiKNw6IXhtg54QP0PQqPFlmS9CDYPqhFu8UWtj9SgL+qRn07y6anxyy4U3/tP5z1DTmnW2CRLArKMBIGB61h7PjYniBAKMU/DRTb+Evxl+dKpo8MkTJgaaz+4KlMqScsERIxLeFbikyoPKLFCGypQWP23ZU8Fi3YJW1uNVU3Y16gBZywrh8o1qDSerHcD0/WGCxtmjaAPjpd79fwYIB2NkwtmOhgbY90EnipJgb1kFniuG47mtuMZzGK4X0/iYtmo3FHBLHbkJKfdP9cRahzvh3TZKB5jVKUD9JTcs8ddvcjT0WzMYyAID/qOq+/SIAN3MVvrqulCPYJSRcP/BPxvK53X49VOAITW4z9j8waArZnx6kyhrQ7PxBCKU=
+
+  matrix:
   - EMACS_VERSION="master"
   - EMACS_VERSION="26.1-rc1"
   - EMACS_VERSION="25.3"
   - EMACS_VERSION="24.5"
 
 script:
-  - |
-    docker build --build-arg EMACS_VERSION=${EMACS_VERSION} \
-                 --tag emacs-cask:${EMACS_VERSION} \
-                 --file=emacs-cask .
+- |
+  docker build --build-arg EMACS_VERSION=${EMACS_VERSION} \
+               --tag flycheck/emacs-cask:${EMACS_VERSION} \
+               emacs-cask
+
+after_success:
+- echo "$DOCKER_PASS" | docker login -u "$DOCKER_USER" --password-stdin
+- docker push flycheck/emacs-cask:${EMACS_VERSION}
