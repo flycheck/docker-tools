@@ -18,5 +18,10 @@ script:
                emacs-cask
 
 after_success:
-- echo "$DOCKER_PASS" | docker login -u "$DOCKER_USER" --password-stdin
-- docker push flycheck/emacs-cask:${EMACS_VERSION}
+- |
+  if [[ "$TRAVIS_PULL_REQUEST" != "true" ]] && [[ "$TRAVIS_BRANCH" == "master" ]]; then
+    echo "$DOCKER_PASS" | docker login -u "$DOCKER_USER" --password-stdin
+    docker push flycheck/${IMAGE}:${VERSION}
+  else
+    echo "not pushing images"
+  fi
