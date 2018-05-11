@@ -9,7 +9,7 @@
 FROM ubuntu:16.04 AS emacs-builder
 
 ENV DEBIAN_FRONTEND noninteractive
-RUN apt-get update && \
+RUN apt-get update >/dev/null && \
     apt-get install --no-install-recommends -y \
             autoconf \
             automake \
@@ -19,6 +19,7 @@ RUN apt-get update && \
             libncurses-dev \
             unzip \
             xz-utils \
+            >/dev/null \
     && rm -rf /var/lib/apt/lists/*
 
 ARG EMACS_VERSION
@@ -26,7 +27,7 @@ ENV EMACS_VERSION ${EMACS_VERSION:-25.3}
 RUN case ${EMACS_VERSION} in \
       master) \
         curl -sSLo emacs.zip "https://github.com/emacs-mirror/emacs/archive/master.zip" \
-        && unzip emacs.zip \
+        && unzip emacs.zip >/dev/null \
         && rm emacs.zip \
         ;; \
       *-rc*) \
@@ -43,11 +44,12 @@ RUN case ${EMACS_VERSION} in \
         ;; \
     esac \
     && cd emacs-master \
-    && ./autogen.sh \
+    && ./autogen.sh >/dev/null \
     && ./configure --prefix=/opt/emacs \
                    --with-x-toolkit=no --without-x --without-all --with-xml2 \
                    CFLAGS='-O2 -march=native' CXXFLAGS='-O2 -march=native' \
-    && make -j8 install
+                   >/dev/null \
+    && make -j8 install >/dev/null
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # Get and bootstrap cask
@@ -55,13 +57,14 @@ RUN case ${EMACS_VERSION} in \
 FROM ubuntu:18.04 AS cask-builder
 
 ENV DEBIAN_FRONTEND noninteractive
-RUN apt-get update && \
+RUN apt-get update >/dev/null && \
     apt-get install --no-install-recommends -y \
             ca-certificates \
             curl \
             git \
             gnutls-bin \
             python \
+            >/dev/null \
     && rm -rf /var/lib/apt/lists/*
 
 ENV PATH /opt/emacs/bin:$PATH
@@ -74,12 +77,13 @@ RUN curl -fsSL https://raw.githubusercontent.com/cask/cask/master/go | python
 FROM ubuntu:18.04
 
 ENV DEBIAN_FRONTEND noninteractive
-RUN apt-get update && \
+RUN apt-get update >/dev/null && \
     apt-get install --no-install-recommends -y \
             ca-certificates \
             gnutls-bin \
             make \
             python \
+            >/dev/null \
     && rm -rf /var/lib/apt/lists/*
 
 ENV PATH /opt/emacs/bin:$PATH

@@ -6,7 +6,7 @@
 # for the later image
 FROM ubuntu:latest AS builder
 
-RUN apt-get update && \
+RUN apt-get update >/dev/null && \
     apt-get install --no-install-recommends -y \
             build-essential \
             curl \
@@ -14,10 +14,11 @@ RUN apt-get update && \
             # Needed by `go get`
             git \
             zlib1g-dev \
+            >/dev/null \
     && rm -rf /var/lib/apt/lists/*
 
 # Install Ruby tools
-RUN gem install --no-document \
+RUN gem install --no-document --quiet \
         foodcritic \
         haml \
         mdl \
@@ -43,7 +44,8 @@ RUN curl -sSLo go.tgz "https://golang.org/dl/go${GOLANG_VERSION}.linux-amd64.tar
           github.com/golang/lint/golint \
           github.com/kisielk/errcheck \
           github.com/mdempsky/unconvert \
-          honnef.co/go/tools/cmd/megacheck
+          honnef.co/go/tools/cmd/megacheck \
+          >/dev/null
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # Runtime image
@@ -51,7 +53,7 @@ FROM ubuntu:18.04
 
 # Install tools that are in APT
 ENV DEBIAN_FRONTEND noninteractive
-RUN apt-get update && \
+RUN apt-get update >/dev/null && \
     apt-get install --no-install-recommends -y \
             asciidoc \
             asciidoctor \
@@ -94,6 +96,7 @@ RUN apt-get update && \
             zsh \
             # For uncompressing tarballs
             xz-utils \
+            >/dev/null \
     && rm -rf /var/lib/apt/lists/*
 
 # Get Ruby tools (and GO install) from builder
@@ -114,7 +117,7 @@ RUN curl -sSLf "https://sh.rustup.rs" | sh -s -- -y \
 # Cargo needs to update its index otherwise tests will timeout
 # There's a `-Z offline` flag, but nightly only.
 # See https://github.com/rust-lang/cargo/issues/4686
-    && cargo search
+    && cargo search --quiet
 
 # Install nodejs and NPM tools
 ENV NODE_VERSION 8.11.1
@@ -122,7 +125,7 @@ RUN curl -sSLo node.txz "https://nodejs.org/dist/v${NODE_VERSION}/node-v${NODE_V
     && tar -C /usr/local -xf node.txz --strip-components=1 --no-same-owner \
     && rm node.txz \
     && ln -s /usr/local/bin/node /usr/local/bin/nodejs \
-    && npm install --global \
+    && npm install --quiet --global \
            coffeelint \
            coffeescript \
            csslint \
@@ -144,8 +147,8 @@ RUN curl -sSLo node.txz "https://nodejs.org/dist/v${NODE_VERSION}/node-v${NODE_V
 
 # Install Python tools
 # We need setuptools to install the tools, and we can't do it in the same command
-RUN pip install --upgrade pip setuptools
-RUN pip install \
+RUN pip install --quiet --upgrade pip setuptools
+RUN pip install --quiet \
         docutils \
         flake8 \
         proselint \

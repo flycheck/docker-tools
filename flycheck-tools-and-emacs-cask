@@ -7,10 +7,11 @@ FROM emacs-cask:${EMACS_VERSION} AS emacs-cask
 FROM flycheck-tools
 
 # We need gnutls for downloading packages from ELPA
-RUN apt-get update && \
+RUN apt-get update >/dev/null && \
     apt-get install --no-install-recommends -y \
             gnutls-bin \
             make \
+            >/dev/null \
     && rm -rf /var/lib/apt/lists/*
 
 # We need Emacs and Cask
