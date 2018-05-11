@@ -177,4 +177,4 @@ COPY --from=hadolint/hadolint:latest /bin/hadolint /usr/local/bin/
 
 # Output version of all installed tools
 COPY check-tools /usr/local/bin/
-CMD ["check-tools"]
+RUN check-tools
