@@ -16,9 +16,9 @@ echo "--- Installed tools ---" \
     && echo "css-stylelint: $(stylelint --version)" \
     && echo "cwl: $(schema-salad-tool --version)" \
     && echo "d-dmd: missing" 1>&2 \
-    && echo "dockerfile-hadolint: $(hadolint --version)" 1>&2 \
+    && echo "dockerfile-hadolint: $(hadolint --version)" \
     && echo "elixir-dogma: missing" 1>&2 \
-    && echo "erlang-rebar3: $(rebar3 --version)" 1>&2 \
+    && echo "erlang-rebar3: $(rebar3 --version)" \
     && echo "erlang: $(dpkg -s erlang-base | grep Version | cut -d: -f3)" \
     && echo "eruby-erubis: $(erubis -v)" \
     && echo "fortran-gfortran: $(gfortran --version | head -n1)" \
@@ -65,6 +65,7 @@ echo "--- Installed tools ---" \
     && echo "python-flake8: $(flake8 --version)" \
     && echo "python-pycompile: $(python --version 2>&1)" \
     && echo "python-pylint: $(pylint --version 2>/dev/null | head -n1)" \
+    && echo "python-mypy: $(mypy --version)" \
     && echo "r-lintr: missing" 1>&2 \
     && echo "racket: $(racket --version)" \
     && echo "rpm-rpmlint: $(rpmlint --version)" \

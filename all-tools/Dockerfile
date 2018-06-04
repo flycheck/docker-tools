@@ -82,7 +82,8 @@ RUN apt-get update >/dev/null && \
             php-codesniffer \
             protobuf-compiler \
             puppet \
-            python-pip \
+            python3-distutils \
+            python3-pip \
             racket \
             rpmlint \
             ruby \
@@ -146,16 +147,23 @@ RUN curl -sSLo node.txz "https://nodejs.org/dist/v${NODE_VERSION}/node-v${NODE_V
            typescript
 
 # Install Python tools
-# We need setuptools to install the tools, and we can't do it in the same command
-RUN pip install --quiet --upgrade pip setuptools
-RUN pip install --quiet \
-        docutils \
-        flake8 \
-        proselint \
-        pylint \
-        schema-salad \
-        sphinx \
+# We need setuptools to install the tools, and we can't do it in the same
+# command
+RUN pip3 install --quiet --upgrade pip setuptools
+RUN pip3 install --quiet \
+         docutils \
+         flake8 \
+         mypy \
+         proselint \
+         pylint \
+         schema-salad \
+         sphinx \
     && rm -rf /root/.cache/pip
+
+# Setup C locale, needed by a proselint dependency at least when using python3
+# See http://click.pocoo.org/5/python3/
+ENV LC_ALL C.UTF-8
+ENV LANG   C.UTF-8
 
 # Install Lua tools
 RUN luarocks install luacheck
