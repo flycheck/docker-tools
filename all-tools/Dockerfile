@@ -41,7 +41,7 @@ RUN curl -sSLo go.tgz "https://golang.org/dl/go${GOLANG_VERSION}.linux-amd64.tar
     && tar -xf go.tgz -C /usr/local \
     && rm go.tgz \
     && go get \
-          github.com/golang/lint/golint \
+          golang.org/x/lint/golint \
           github.com/kisielk/errcheck \
           github.com/mdempsky/unconvert \
           honnef.co/go/tools/cmd/staticcheck \
