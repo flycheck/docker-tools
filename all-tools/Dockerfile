@@ -34,7 +34,7 @@ RUN gem install --no-document --quiet \
         sqlint
 
 # Install GO and GO tools
-ENV GOLANG_VERSION 1.11.4
+ENV GOLANG_VERSION 1.12
 ENV GOPATH /go
 ENV PATH   $GOPATH/bin:/usr/local/go/bin:$PATH
 RUN curl -sSLo go.tgz "https://golang.org/dl/go${GOLANG_VERSION}.linux-amd64.tar.gz" \
