@@ -100,6 +100,7 @@ echo "--- Installed tools ---" \
     && echo "tex-chktex: $(chktex --version | head -n1)" \
     && echo "tex-lacheck: $(dpkg -s lacheck | grep Version | cut -d' ' -f2)" \
     && echo "texinfo: $(makeinfo --version | head -n1)" \
+    && echo "textlint: $(textlint --version)" \
     && echo "typescript-tslint: $(tslint --version)" \
     && echo "verilog-verilator: $(verilator --version)" \
     && echo "vhdl-ghdl: missing" 1>&2 \

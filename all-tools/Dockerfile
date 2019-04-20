@@ -122,7 +122,7 @@ RUN curl -sSLf "https://sh.rustup.rs" | sh -s -- -y \
     && cargo search --quiet
 
 # Install nodejs and NPM tools
-ENV NODE_VERSION 8.11.1
+ENV NODE_VERSION 10.15.3
 RUN curl -sSLo node.txz "https://nodejs.org/dist/v${NODE_VERSION}/node-v${NODE_VERSION}-linux-x64.tar.xz" \
     && tar -C /usr/local -xf node.txz --strip-components=1 --no-same-owner \
     && rm node.txz \
@@ -144,6 +144,7 @@ RUN curl -sSLo node.txz "https://nodejs.org/dist/v${NODE_VERSION}/node-v${NODE_V
            semistandard \
            standard \
            stylelint \
+           textlint \
            tslint \
            typescript
 
