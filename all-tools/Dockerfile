@@ -145,6 +145,7 @@ RUN curl -sSLo node.txz "https://nodejs.org/dist/v${NODE_VERSION}/node-v${NODE_V
            standard \
            stylelint \
            textlint \
+           textlint-rule-write-good \
            tslint \
            typescript
 
