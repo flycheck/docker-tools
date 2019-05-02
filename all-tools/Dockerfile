@@ -75,6 +75,7 @@ RUN apt-get update >/dev/null && \
             groovy \
             hlint \
             jruby \
+            jq \
             lacheck \
             libperl-critic-perl \
             luarocks \
