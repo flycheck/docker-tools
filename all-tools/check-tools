@@ -44,6 +44,7 @@ echo "--- Installed tools ---" \
     && echo "jscs: $(jscs --version)" \
     && echo "json-jsonlint: $(jsonlint --version)" \
     && echo "json-python-json: $(python --version 2>&1)" \
+    && echo "json-jq: $(jq --version)" \
     && echo "jsonnet: missing" 1>&2 \
     && echo "less-stylelint: $(stylelint --version)" \
     && echo "less: $(lessc --version)" \
