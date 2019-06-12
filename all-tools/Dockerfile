@@ -45,7 +45,6 @@ RUN curl -sSLo go.tgz "https://golang.org/dl/go${GOLANG_VERSION}.linux-amd64.tar
           github.com/kisielk/errcheck \
           github.com/mdempsky/unconvert \
           honnef.co/go/tools/cmd/staticcheck \
-          honnef.co/go/tools/cmd/megacheck \
           >/dev/null
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

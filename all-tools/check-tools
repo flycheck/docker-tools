@@ -26,7 +26,6 @@ echo "--- Installed tools ---" \
     && echo "go-errcheck: ??" \
     && echo "go-gofmt: $(go version)" \
     && echo "go-golint: ??" \
-    && echo "go-megacheck: ??" \
     && echo "go-staticcheck: ??" \
     && echo "go-test: $(go version)" \
     && echo "go-unconvert: ??" \
