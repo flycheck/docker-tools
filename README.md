@@ -13,7 +13,9 @@ to master), and uploaded to [flycheck/all-tools][hub:all-tools] and
 
 There is a third image in [flycheck/flycheck][],
 `all-tools-and-emacs-cask`. This one is never pushed anywhere; it is built and
-used directly on Travis in order to run our integration tests.
+used directly on Travis in order to run our integration tests.  See the
+[Flycheck manual][manual:run-integ] on how to use that image to run the
+integration tests locally.
 
 ## How to add a tool
 
@@ -42,14 +44,17 @@ To add a new tool to the image:
    You should add a line that outputs the tool version *on a single line*.  The
    output format should be:
 
-     LANGUAGE-CHECKER: VERSION
+   ```
+   LANGUAGE-CHECKER: VERSION
+   ```
 
    E.g.:
 
-     python-flake8: 3.5.0 (mccabe: 0.6.1, pycodestyle: 2.3.1, pyflakes: 1.6.0) CPython 2.7.15rc1 on Linux
+   ```
+   python-flake8: 3.5.0 (mccabe: 0.6.1, pycodestyle: 2.3.1, pyflakes: 1.6.0) CPython 2.7.15rc1 on Linux
+   ```
 
-
-   LANGUAGE-CHECKER should be the same as in the variable `flycheck-checkers`
+   `LANGUAGE-CHECKER` should be the same as in the variable `flycheck-checkers`
    from `flycheck.el`.  The `check-tools` script follows the same order as
    `flycheck-checkers`: there is one line per entry `flycheck-checkers`.
    `VERSION` can contain other identifying information, as in the example above.
@@ -64,3 +69,4 @@ To add a new tool to the image:
 [hub:emacs-cask]: https://hub.docker.com/r/flycheck/emacs-cask/
 [flycheck/flycheck]: https://www.github.com/flycheck/flycheck
 [docker-man]: https://docs.docker.com/engine/reference/builder/#run
+[manual:run-integ]: http://www.flycheck.org/en/latest/contributor/contributing.html#running-all-the-integration-tests
