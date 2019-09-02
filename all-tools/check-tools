@@ -21,6 +21,7 @@ echo "--- Installed tools ---" \
     && echo "erlang-rebar3: $(rebar3 --version)" \
     && echo "erlang: $(dpkg -s erlang-base | grep Version | cut -d: -f3)" \
     && echo "eruby-erubis: $(erubis -v)" \
+    && echo "eruby-ruumba: $(ruumba --version)" \
     && echo "fortran-gfortran: $(gfortran --version | head -n1)" \
     && echo "go-build: $(go version)" \
     && echo "go-errcheck: ??" \
