@@ -26,6 +26,7 @@ RUN gem install --no-document --quiet \
         reek \
         rubocop \
         ruby-lint \
+        ruumba \
         sass \
         scss_lint \
         scss_lint_reporter_checkstyle \
