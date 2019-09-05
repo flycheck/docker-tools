@@ -16,9 +16,9 @@ script:
 - |
   case $IMAGE in
     emacs-cask)
-      docker build --build-arg EMACS_VERSION=${VERSION} \
-                   --tag flycheck/${IMAGE}:${VERSION} \
-                   ${IMAGE};;
+      travis_wait 40 docker build --build-arg EMACS_VERSION=${VERSION} \
+                                  --tag flycheck/${IMAGE}:${VERSION} \
+                                  ${IMAGE};;
     all-tools)
       docker build --tag flycheck/${IMAGE} ${IMAGE};;
   esac
