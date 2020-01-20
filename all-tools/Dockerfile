@@ -35,7 +35,7 @@ RUN gem install --no-document --quiet \
         sqlint
 
 # Install GO and GO tools
-ENV GOLANG_VERSION 1.12
+ENV GOLANG_VERSION 1.13.6
 ENV GOPATH /go
 ENV PATH   $GOPATH/bin:/usr/local/go/bin:$PATH
 RUN curl -sSLo go.tgz "https://golang.org/dl/go${GOLANG_VERSION}.linux-amd64.tar.gz" \
@@ -123,7 +123,7 @@ RUN curl -sSLf "https://sh.rustup.rs" | sh -s -- -y \
     && cargo search --quiet
 
 # Install nodejs and NPM tools
-ENV NODE_VERSION 10.15.3
+ENV NODE_VERSION 12.14.1
 RUN curl -sSLo node.txz "https://nodejs.org/dist/v${NODE_VERSION}/node-v${NODE_VERSION}-linux-x64.tar.xz" \
     && tar -C /usr/local -xf node.txz --strip-components=1 --no-same-owner \
     && rm node.txz \
@@ -173,7 +173,7 @@ ENV LANG   C.UTF-8
 RUN luarocks install luacheck
 
 # Install Processing
-ENV PROCESSING_VERSION 3.3.7
+ENV PROCESSING_VERSION 3.5.4
 RUN curl -sSLo processing.tgz "http://download.processing.org/processing-${PROCESSING_VERSION}-linux64.tgz" \
     && mkdir /opt/processing \
     && tar -xf processing.tgz -C /opt/processing --strip-components=1 \
