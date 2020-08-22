@@ -67,6 +67,7 @@ echo "--- Installed tools ---" \
     && echo "python-flake8: $(flake8 --version)" \
     && echo "python-pycompile: $(python --version 2>&1)" \
     && echo "python-pylint: $(pylint --version 2>/dev/null | head -n1)" \
+    && echo "python-pyright: $(pyright --version)" \
     && echo "python-mypy: $(mypy --version)" \
     && echo "r-lintr: missing" 1>&2 \
     && echo "racket: $(racket --version)" \
