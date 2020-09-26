@@ -71,6 +71,7 @@ RUN apt-get update >/dev/null && \
             gcc \
             gfortran \
             ghc \
+            git \
             gnat \
             groovy \
             hlint \
