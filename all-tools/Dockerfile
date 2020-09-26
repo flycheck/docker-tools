@@ -141,6 +141,7 @@ RUN curl -sSLo node.txz "https://nodejs.org/dist/v${NODE_VERSION}/node-v${NODE_V
            less \
            markdownlint-cli \
            pug-cli \
+           pyright \
            sass-lint \
            semistandard \
            standard \
