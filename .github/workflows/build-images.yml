@@ -15,7 +15,7 @@ jobs:
       - name: Build emacs-cask
         run: |
           docker build --build-arg EMACS_VERSION=${{ matrix.emacs-version }} \
-                       --targ flycheck/emacs-cask:${{ matrix.emacs-version }} \
+                       --tag flycheck/emacs-cask:${{ matrix.emacs-version }} \
                        emacs-cask
 
   build-all-tools:
