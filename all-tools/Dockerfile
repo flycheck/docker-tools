@@ -86,6 +86,7 @@ RUN apt-get update >/dev/null && \
             protobuf-compiler \
             puppet \
             python3-distutils \
+            python-is-python3 \
             python3-pip \
             racket \
             rpmlint \
