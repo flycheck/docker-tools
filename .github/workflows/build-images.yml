@@ -25,7 +25,7 @@ jobs:
                        emacs-cask
 
       - name: Push emacs-cask
-        if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/master' }}
+        if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/master' || github.event_name == 'schedule' }}
         run: |
           echo "$DOCKER_PASS" | docker login -u "$DOCKER_USER" --password-stdin
           docker push flycheck/emacs-cask:${{ matrix.emacs-version }}
@@ -38,7 +38,7 @@ jobs:
         run: docker build --tag flycheck/all-tools all-tools
 
       - name: Push all-tools
-        if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/master' }}
+        if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/master' || github.event_name == 'schedule' }}
         run: |
           echo "$DOCKER_PASS" | docker login -u "$DOCKER_USER" --password-stdin
           docker push flycheck/all-tools:latest
