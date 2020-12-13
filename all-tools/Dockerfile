@@ -117,7 +117,7 @@ COPY --from=builder /go /go
 ENV RUSTUP_HOME /usr/local/rustup
 ENV CARGO_HOME  /usr/local/cargo
 ENV PATH        $CARGO_HOME/bin:$PATH
-RUN curl -sSLf "https://sh.rustup.rs" | sh -s -- -y \
+RUN curl --proto '=https' -tlsv1.2 -sSf "https://sh.rustup.rs" | sh -s -- -y \
 # Cargo needs to update its index otherwise tests will timeout
 # There's a `-Z offline` flag, but nightly only.
 # See https://github.com/rust-lang/cargo/issues/4686
