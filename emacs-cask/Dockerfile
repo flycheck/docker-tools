@@ -45,7 +45,7 @@ RUN case ${EMACS_VERSION} in \
     && ./autogen.sh >/dev/null \
     && ./configure --prefix=/opt/emacs \
                    --with-x-toolkit=no --without-x --without-all --with-xml2 \
-                   CANNOTDUMP=yes \
+                   CANNOT_DUMP=yes \
                    CFLAGS='-O2 -march=native' CXXFLAGS='-O2 -march=native' \
                    >/dev/null \
     && make -j8 install >/dev/null
