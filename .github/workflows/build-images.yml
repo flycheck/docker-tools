@@ -1,6 +1,10 @@
 name: Build and push Docker images
 
-on: [push, pull_request]
+on:
+  push:
+  pull_request:
+  schedule:
+    - cron: "0 5 10 * *"
 
 env:
   DOCKER_PASS: ${{ secrets.DOCKER_HUB_PASSWORD}}
@@ -11,7 +15,7 @@ jobs:
     runs-on: ubuntu-20.04
     strategy:
       matrix:
-        emacs-version: [26.3, 27.1, master]
+        emacs-version: [master]
     steps:
       - uses: actions/checkout@v2
       - name: Build emacs-cask
