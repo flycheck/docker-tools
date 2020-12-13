@@ -4,7 +4,7 @@
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # Builder image.  We build ruby and GO tools, then we don't need build-essential
 # for the later image
-FROM ubuntu:18.04 AS builder
+FROM ubuntu:20.04 AS builder
 
 RUN apt-get update >/dev/null && \
     apt-get install --no-install-recommends -y \
@@ -35,7 +35,7 @@ RUN gem install --no-document --quiet \
         sqlint
 
 # Install GO and GO tools
-ENV GOLANG_VERSION 1.13.6
+ENV GOLANG_VERSION 1.15.6
 ENV GOPATH /go
 ENV PATH   $GOPATH/bin:/usr/local/go/bin:$PATH
 RUN curl -sSLo go.tgz "https://golang.org/dl/go${GOLANG_VERSION}.linux-amd64.tar.gz" \
@@ -50,7 +50,7 @@ RUN curl -sSLo go.tgz "https://golang.org/dl/go${GOLANG_VERSION}.linux-amd64.tar
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # Runtime image
-FROM ubuntu:18.04
+FROM ubuntu:20.04
 
 # Install tools that are in APT
 ENV DEBIAN_FRONTEND noninteractive
@@ -124,7 +124,7 @@ RUN curl -sSLf "https://sh.rustup.rs" | sh -s -- -y \
     && cargo search --quiet
 
 # Install nodejs and NPM tools
-ENV NODE_VERSION 12.14.1
+ENV NODE_VERSION 14.15.1
 RUN curl -sSLo node.txz "https://nodejs.org/dist/v${NODE_VERSION}/node-v${NODE_VERSION}-linux-x64.tar.xz" \
     && tar -C /usr/local -xf node.txz --strip-components=1 --no-same-owner \
     && rm node.txz \

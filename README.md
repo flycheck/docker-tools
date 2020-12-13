@@ -1,9 +1,9 @@
 This repository contains the Dockerfiles used for running Flycheck's unit and
 integration tests on Travis CI.
 
-- `all-tools` creates a container (based on Ubuntu 18.04) installing all the
+- `all-tools` creates a container (based on Ubuntu 20.04) installing all the
   tools that Flycheck supports.  The full image is around 4.5GB uncompressed.
-- `emacs-cask` creates a container (still on Ubuntu 18.04) with Emacs, Cask, and
+- `emacs-cask` creates a container (still on Ubuntu 20.04) with Emacs, Cask, and
   Make installed.  This is used to run Flycheck's unit tests.  It is
   configurable: we can build with different Emacs versions.
 

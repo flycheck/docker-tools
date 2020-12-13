@@ -1,0 +1,26 @@
+name: Build and push Docker images
+
+on:
+  push:
+    branchers: [ $default-branch ]
+
+jobs:
+  build-emacs-cask:
+    runs-on: ubuntu-20.04
+    strategy:
+      matrix:
+        emacs-version: [25.3, 26.3, 27.1, master]
+    steps:
+      - uses: actions/checkout@v2
+      - name: Build emacs-cask
+        run: |
+          docker build --build-arg EMACS_VERSION=${{ matrix.emacs-version }} \
+                       --targ flycheck/emacs-cask:${{ matrix.emacs-version }} \
+                       emacs-cask
+
+  build-all-tools:
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v2
+      - name: Build all-tools
+        run: docker build --tag flycheck/all-tools all-tools

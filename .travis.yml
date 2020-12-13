@@ -11,7 +11,6 @@ env:
   - IMAGE="emacs-cask" VERSION="27.1"
   - IMAGE="emacs-cask" VERSION="26.3"
   - IMAGE="emacs-cask" VERSION="25.3"
-  - IMAGE="emacs-cask" VERSION="24.5"
   - IMAGE="all-tools"  VERSION="latest"
 
 script:

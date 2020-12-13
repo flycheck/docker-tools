@@ -4,9 +4,7 @@
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # Build Emacs
 
-# We need 16.04 as Emacs 24.4 and 24.5 won't build with 18.04.
-# But they work fine with a 18.04 runtime.
-FROM ubuntu:16.04 AS emacs-builder
+FROM ubuntu:20.04 AS emacs-builder
 
 ENV DEBIAN_FRONTEND noninteractive
 RUN apt-get update >/dev/null && \
@@ -23,7 +21,7 @@ RUN apt-get update >/dev/null && \
     && rm -rf /var/lib/apt/lists/*
 
 ARG EMACS_VERSION
-ENV EMACS_VERSION ${EMACS_VERSION:-25.3}
+ENV EMACS_VERSION ${EMACS_VERSION:-27.1}
 RUN case ${EMACS_VERSION} in \
       master) \
         curl -sSLo emacs.zip "https://github.com/emacs-mirror/emacs/archive/master.zip" \
@@ -54,7 +52,7 @@ RUN case ${EMACS_VERSION} in \
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # Get and bootstrap cask
 
-FROM ubuntu:18.04 AS cask-builder
+FROM ubuntu:20.04 AS cask-builder
 
 ENV DEBIAN_FRONTEND noninteractive
 RUN apt-get update >/dev/null && \
@@ -74,7 +72,7 @@ RUN curl -fsSL https://raw.githubusercontent.com/cask/cask/master/go | python
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # Final images, without developement dependencies
-FROM ubuntu:18.04
+FROM ubuntu:20.04
 
 ENV DEBIAN_FRONTEND noninteractive
 RUN apt-get update >/dev/null && \
