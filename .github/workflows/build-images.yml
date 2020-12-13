@@ -1,15 +1,17 @@
 name: Build and push Docker images
 
-on:
-  push:
-    branchers: [ $default-branch ]
+on: [push, pull_request]
+
+env:
+  DOCKER_PASS: ${{ secrets.DOCKER_HUB_PASSWORD}}
+  DOCKER_USER: ${{ secrets.DOCKER_HUB_USERNAME }}
 
 jobs:
   build-emacs-cask:
     runs-on: ubuntu-20.04
     strategy:
       matrix:
-        emacs-version: [25.3, 26.3, 27.1, master]
+        emacs-version: [26.3, 27.1, master]
     steps:
       - uses: actions/checkout@v2
       - name: Build emacs-cask
@@ -18,9 +20,21 @@ jobs:
                        --tag flycheck/emacs-cask:${{ matrix.emacs-version }} \
                        emacs-cask
 
+      - name: Push emacs-cask
+        if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/master' }}
+        run: |
+          echo "$DOCKER_PASS" | docker login -u "$DOCKER_USER" --password-stdin
+          docker push flycheck/emacs-cask:${{ matrix.emacs-version }}
+
   build-all-tools:
     runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v2
       - name: Build all-tools
         run: docker build --tag flycheck/all-tools all-tools
+
+      - name: Push all-tools
+        if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/master' }}
+        run: |
+          echo "$DOCKER_PASS" | docker login -u "$DOCKER_USER" --password-stdin
+          docker push flycheck/all-tools:latest
