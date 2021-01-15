@@ -56,6 +56,7 @@ FROM ubuntu:20.04
 ENV DEBIAN_FRONTEND noninteractive
 RUN apt-get update >/dev/null && \
     apt-get install --no-install-recommends -y \
+            ansible-lint \
             asciidoc \
             asciidoctor \
             cfengine3 \

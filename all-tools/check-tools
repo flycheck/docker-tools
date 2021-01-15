@@ -2,6 +2,7 @@
 
 echo "--- Installed tools ---" \
     && echo "ada-gnat: $(gnat --version | head -n1)" \
+    && echo "ansible-ansiblelint: $(ansible-lint --version)" \
     && echo "asciidoc: $(asciidoc --version)" \
     && echo "asciidoctor: $(asciidoctor --version | head -n1)" \
     && echo "c/c++-clang: $(clang --version | head -n1)" \
